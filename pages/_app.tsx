@@ -1,8 +1,19 @@
-import '../styles/globals.css'
 import type { AppProps } from 'next/app'
+import { SessionProvider } from 'next-auth/react';
+import { Session } from 'next-auth';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import makeTheme from '../lib/makeTheme';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+import '@fontsource/roboto-slab';
+import '@fontsource/poppins';
+
+function WhatsDue({ Component, pageProps: { session, ...pageProps } }: AppProps<{session: Session}>) {
+  return <SessionProvider session={session}>
+    <ThemeProvider theme={makeTheme()}>
+      <CssBaseline />
+      <Component {...pageProps} />
+    </ThemeProvider>
+  </SessionProvider>
 }
 
-export default MyApp
+export default WhatsDue
