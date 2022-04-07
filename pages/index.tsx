@@ -24,10 +24,10 @@ const NotSignedIn = () => {
     padding: '2rem'
   }}>
     <Paper sx={{maxWidth: 500, p: 2}}>
-      <Typography variant={'h4'} gutterBottom>What's Due?</Typography>
+      <Typography variant={'h4'} gutterBottom>What&apos;s Due?</Typography>
       <Typography mb={1.5}>
-        Hey there! It looks like you aren't signed in.&nbsp;
-        Sign in to see what's due!
+        Hey there! It looks like you aren&apos;t signed in.&nbsp;
+        Sign in to see what&apos;s due!
       </Typography>
       <Button fullWidth onClick={() => signIn()} endIcon={<LoginRounded />}>Sign In</Button>
     </Paper>

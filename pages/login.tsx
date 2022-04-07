@@ -9,8 +9,8 @@ import { useRouter } from 'next/router';
 export default function Login(
   // { providers }: { providers: Record<BuiltInProviderType, ClientSafeProvider> }
 ) {
-  const { status } = useSession();
-  if (status === 'authenticated') useRouter().push('/').then();
+  const { status } = useSession(), router = useRouter();
+  if (status === 'authenticated') router.push('/').then();
 
   const
     [isLoading, setIsLoading] = useState(true),

@@ -4,8 +4,8 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return <Paper square sx={{p: 2}}>
-    <Typography variant={'h4'} gutterBottom>What's Due?</Typography>
-    <Typography>
+    <Typography variant={'h5'} gutterBottom>What&apos;s Due?</Typography>
+    <Typography variant={'body2'}>
       This is a project by Vincent to help NUSH students better
       manage the many deadlines of projects, homework & assignments.
     </Typography>
