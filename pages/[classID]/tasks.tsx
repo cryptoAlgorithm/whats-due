@@ -92,6 +92,7 @@ const Tasks = (props: {tasks: ITask[], classData: IClass}) => {
 export default Tasks;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  console.log('getProps, context:', context);
   const
     session = await getSession(context),
     db = (await mongoPromise).db();
@@ -105,6 +106,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (!session?.user) return redirectLanding('/login'); // Make sure user is logged in
   if (!context.params?.classID || !ObjectId.isValid(String(context.params?.classID))) // Validate class ID
     return redirectLanding();
+  console.log('checks passed');
 
   const classData = await db
     .collection('classes')
@@ -112,12 +114,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       _id: new ObjectId(String(context.params.classID)),
       members: new ObjectId(session.user.id),
     });
+
+  console.log('classData', classData);
+
   if (!classData) return redirectLanding(); // This class doesn't exist or the user isn't in it
 
   const tasks = await db
     .collection('tasks')
     .find<ITask>({classID: new ObjectId(String(context.params.classID))}).toArray();
   if (!tasks) redirectLanding();
+
+  console.log('tasks:', tasks)
 
   return { props: { tasks, classData } }
 }
