@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import mongoPromise from '../../../lib/mongodb';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import AzureADProvider from "next-auth/providers/azure-ad";
+import { ObjectId } from 'mongodb';
 
 export default NextAuth({
   providers: [
@@ -14,25 +15,16 @@ export default NextAuth({
   secret: 'jrqxZMvBgrPAAd+GttXOGpd3zuX8wP/49gQUFiWeSW0=', // Used to encrypt session data
   adapter: MongoDBAdapter(mongoPromise),
   pages: {
-    signIn: '/login'
+    signIn: '/login',
+    error: '/login',
   },
   callbacks: {
-    async signIn({
-      user,
-      account,
-      profile,
-      email,
-      credentials
-    }) {
-      const isAllowedToSignIn = true
-      if (isAllowedToSignIn) {
-        return true
-      } else {
-        // Return false to display a default error message
-        return false
-        // Or you can return a URL to redirect to:
-        // return '/unauthorized'
-      }
-    }
+    async signIn({ user }) {
+      const db = (await mongoPromise).db();
+      return !!(await db.collection('classes').findOne({ members: { $in: [new ObjectId(user.id)] }}));
+    },
+    async session({ session, user, token }) {
+      return { ...session, user: { ...user } };
+    },
   }
 })

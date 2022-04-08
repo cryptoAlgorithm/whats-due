@@ -27,7 +27,7 @@ function ElevationScroll(props: { children: ReactElement }) {
   });
 }
 
-export default function ProminentAppBar(props: {appName: string, children?: ReactElement}) {
+export default function ProminentAppBar(props: {title: string, children?: ReactElement}) {
   return (
     <Box sx={{ flexGrow: 1, top: -64, position: 'sticky', zIndex: t => t.zIndex.appBar }}>
       <ElevationScroll>
@@ -39,7 +39,7 @@ export default function ProminentAppBar(props: {appName: string, children?: Reac
               component='div'
               sx={{ flexGrow: 1, alignSelf: 'flex-end' }}
             >
-              {props.appName}
+              {props.title}
             </Typography>
             {props.children}
           </StyledToolbar>

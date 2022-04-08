@@ -1,10 +1,18 @@
 import { signIn, useSession } from 'next-auth/react'
-import { Paper, Typography } from '@mui/material';
+import { Alert, AlertTitle, Paper, Typography } from '@mui/material';
 import { LoginRounded } from '@mui/icons-material';
 import MicrosoftIcon from '../components/MicrosoftIcon';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+
+const ErrorContent = (props: {error: string}) => {
+  switch (props.error) {
+    case 'AccessDenied':
+      return <>You aren&apos;t in any classes:<br/>You need to be assigned to at least one class to log in.</>
+    default: return <>Something went wrong — please try again</>
+  }
+}
 
 export default function Login(
   // { providers }: { providers: Record<BuiltInProviderType, ClientSafeProvider> }
@@ -21,6 +29,14 @@ export default function Login(
   return (
     <main style={{minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       <Paper sx={{p: 2, pb: 1.5, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1}}>
+        {
+          router.query.error &&
+            <Alert severity={'error'} sx={{mb: 1}}>
+                <AlertTitle>Login failed</AlertTitle>
+                <ErrorContent error={String(router.query.error)} />
+            </Alert>
+        }
+
         <LoginRounded color={'primary'} />
         <Typography variant={'h5'} mb={1.5}>Login</Typography>
 

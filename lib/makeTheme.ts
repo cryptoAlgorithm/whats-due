@@ -39,6 +39,16 @@ export default function makeTheme() {
         },
         defaultProps: { variant: 'contained', }
       },
+      MuiListItemText: {
+        styleOverrides: {
+          secondary: { fontSize: '.8em' }
+        }
+      },
+      MuiList: {
+        styleOverrides: {
+          root: { padding: 0 }
+        }
+      },
     },
   })
 }

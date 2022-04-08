@@ -1,22 +1,14 @@
 import type { NextPage } from 'next'
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import {
-  Avatar,
   Backdrop,
-  Button, CircularProgress, Divider,
-  IconButton,
-  ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, ListItem,
-  Menu,
+  Button, CircularProgress,
   Paper,
   Typography
 } from '@mui/material';
-import ProminentAppBar from '../components/ProminentAppBar';
-import { LoginRounded, LogoutRounded } from '@mui/icons-material';
-import { useState } from 'react';
-import TaskList from '../components/TaskList';
+import { LoginRounded } from '@mui/icons-material';
 import Footer from '../components/Footer';
-import TaskCreator from '../components/TaskCreator';
-import { Session } from 'next-auth';
+import Head from 'next/head';
 
 const NotSignedIn = () => {
   return <main style={{
@@ -34,49 +26,6 @@ const NotSignedIn = () => {
   </main>
 }
 
-const UserManagement = (props: {session: Session}) => {
-  const { session } = props;
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const handleClose = () => setAnchorEl(null);
-
-  return <>
-    <IconButton
-      sx={{p: 0}}
-      aria-label='account of current user'
-      aria-controls='menu-user-management'
-      aria-haspopup='true'
-      onClick={e => setAnchorEl(e.currentTarget)}
-      color='inherit'
-    >
-      <Avatar>{session.user?.name?.charAt(0)}</Avatar>
-    </IconButton>
-    <Menu
-      id='menu-user-management'
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'right',
-      }}
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={!!anchorEl}
-      onClose={handleClose}
-    >
-      <ListItem dense>
-        <ListItemAvatar><Avatar>{session.user?.name?.charAt(0)}</Avatar></ListItemAvatar>
-        <ListItemText primary={session.user?.name} secondary={session.user?.email} />
-      </ListItem>
-      <Divider />
-      <ListItemButton onClick={() => signOut()} dense>
-        <ListItemIcon><LogoutRounded /></ListItemIcon>
-        <ListItemText>Sign Out</ListItemText>
-      </ListItemButton>
-    </Menu>
-  </>
-}
-
 const Home: NextPage = () => {
   const { data: session, status } = useSession();
 
@@ -85,11 +34,11 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <ProminentAppBar appName={'What\'s Due?'}><UserManagement session={session} /></ProminentAppBar>
+      <Head>
+        <title>Your Classes</title>
+      </Head>
 
-      <TaskCreator />
-      <TaskList />
-
+      <Typography variant={'h2'}>Home</Typography>
       <Footer />
     </>
   )
