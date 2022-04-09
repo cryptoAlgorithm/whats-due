@@ -1,5 +1,5 @@
 export const enum TaskVisibility {
-  Private = "PRIVATE",
-  Class = "CLASS",
-  Announcement = "ANNOUNCEMENT",
+  Private = 'PRIVATE',
+  Class = 'CLASS',
+  Announcement = 'ANNOUNCEMENT',
 }

@@ -65,7 +65,7 @@ const MenuHeader = styled(ListSubheader)(({ theme }) => ({
   paddingTop: 8,
 }));
 
-export default function TaskCreator(props: {isAdmin: boolean, isSuperAdmin: boolean}) {
+export default function TaskCreator(props: {isAdmin: boolean, isSuperAdmin: boolean, classId: string}) {
   const
     [inputFocused, setInputFocused] = useState(false),
     [title, setTitle] = useState(''),
@@ -120,7 +120,17 @@ export default function TaskCreator(props: {isAdmin: boolean, isSuperAdmin: bool
             <Box flexGrow={1} />
 
             <ButtonGroup variant={'contained'} size={'small'}>
-              <Button>Add</Button>
+              <Button onClick={async () => {
+                await fetch(`/api/class/${props.classId}/tasks`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    title,
+                    content,
+                    visibility
+                  })
+                });
+              }}>Add</Button>
               <Button
                 sx={{pl: .3, pr: .7, minWidth: '0!important'}}
                 aria-haspopup

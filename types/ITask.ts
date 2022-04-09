@@ -1,4 +1,5 @@
 import { ObjectID } from 'bson';
+import { TaskVisibility } from '../components/types';
 
 export interface ITask {
   _id: ObjectID;
@@ -7,4 +8,6 @@ export interface ITask {
   content: string;
   added: Date;
   author: ObjectID;
+  visibility: TaskVisibility;
+  due?: Date;
 }

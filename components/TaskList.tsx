@@ -1,6 +1,5 @@
 import { Masonry } from '@mui/lab';
-import { styled } from '@mui/material/styles';
-import { Card, CardActionArea, CardContent, Container, Modal, Typography } from '@mui/material';
+import { Container } from '@mui/material';
 import { ITask } from '../types/ITask';
 import { useState } from 'react';
 import TaskCard from './TaskCard';
